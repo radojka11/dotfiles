@@ -1,6 +1,4 @@
-
 -- :h <anything>   shows the help page of anything like commands
-print("Hello Andrej senpai") -- greet me when I start nvim
 -- :options    shows all the options we can set 
 
 local keymap = vim.keymap.set
@@ -155,7 +153,6 @@ require("lazy").setup({
           "nvim-lua/plenary.nvim",
           "nvim-tree/nvim-web-devicons", 
           "MunifTanjim/nui.nvim",
-          -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
         },
         config = function()
             keymap("n", "<leader>n", ":Neotree toggle<CR>", opts)
@@ -191,6 +188,30 @@ require("lazy").setup({
         end,
             
     },
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require("mason").setup({})
+        end,
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        config = function()
+            require("mason-lspconfig").setup({
+                ensure_installed = {"lua_ls", "pyright"}
+            })
+        end,
+    },
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            local lspconfig = require("lspconfig")
+            lspconfig.lua_ls.setup({})
+            lspconfig.pyright.setup({})
+            keymap("n", "K", vim.lsp.buf.hover, {}) -- in vim, shift + k displays the man page of the word under curson
+            keymap("n", "gd", vim.lsp.buf.definition, {})
+        end,
+    },
 })-- neovim will look for the init.lua file of lazy and run its setup func with specific plugins
 
 
@@ -200,22 +221,28 @@ replace = function()
     vim.fn.input("Enter what you want it replaced with: "), 
     vim.fn.input("Press 'g' for global replace or 'gc' for selected replace: "))) end
 
+--custom commands
+vim.api.nvim_create_user_command("Openconfig", function()
+    vim.cmd([[:edit ~/.config/nvim/init.lua]])
+end, {})
 -- splits
 keymap("n", "<leader>l", "<C-w>l", opts)
 keymap("n", "<leader>h", "<C-w>h", opts)
 keymap("n", "<leader>j", "<C-w>j", opts)
 keymap("n", "<leader>k", "<C-w>k", opts)
-keymap("t", "<esc>", [[<C-\><C-n>]], opts) -- the [[]] means raw string in lua
+-- use the :close command to close the current window
+keymap("t", "<esc>", [[<C-\><C-n>]], opts) -- the [[]] means raw string in lua, this is used to exit terminal mode
 keymap("n", "<leader>sv", ":vsplit<CR>", opts)
 keymap("n", "<leader>sh", ":split<CR>", opts)
 keymap("n", "<leader>tv", ":vsplit | terminal<CR>", opts)
 keymap("n", "<leader>th", ":split | terminal<CR>", opts)
 -- general mappings
-keymap("n", "<leader>r", replace, {})
+keymap("n", "<leader>r", replace, {desc = "Runs replace function"})
 keymap("n", "<C-s>", ":w<CR>", {})
+-- use :bd to close the current buffer
 -- buffers
-keymap('n', '<C-h>', ':bprevious<CR>', opts)
-keymap('n', '<C-l>', ':bnext<CR>', opts) 
-keymap("n", "<leader>d", ":close<CR>", opts)
+keymap('n', '<Tab>', ':bnext<CR>', opts)
+-- lsp mappings
+
 
 
