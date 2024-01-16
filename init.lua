@@ -1,4 +1,3 @@
--- :h <anything>   shows the help page of anything like commands
 -- :options    shows all the options we can set 
 
 local keymap = vim.keymap.set
@@ -12,11 +11,17 @@ if vim.fn.has("wsl") == 1 then
             ["*"] = "clip.exe",
         },
         paste = {
-            ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))', 
-            ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))', 
+            ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+            ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
         },
         cache_enabled = 0,
     }
+end
+
+if vim.fn.execute("!dpkg -l | grep ripgrep") == "nil" then
+    print("ripgrep is not installed on the system, installing...")
+    vim.fn.execute("sudo apt-get install ripgrep")
+    print("ripgrep installed")
 end
 
 -- OPTIONS --
@@ -39,7 +44,7 @@ vim.opt.ignorecase = true
 vim.opt.termguicolors = true
 vim.opt.showmode = false
 -- the leader key allows for keymaps that dont conflict with vims default keybindings
-vim.g.mapleader = " " 
+vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- PLUGINS --
@@ -74,8 +79,8 @@ require("lazy").setup({
         end,
     },
     {
-        "catppuccin/nvim", 
-        name = "catppuccin", 
+        "catppuccin/nvim",
+        name = "catppuccin",
         priority = 1000,
         config = function()
             vim.cmd.colorscheme("catppuccin")
@@ -91,13 +96,13 @@ require("lazy").setup({
         "nvim-treesitter/nvim-treesitter",
         config = function()
             require("nvim-treesitter.configs").setup({
-                ensure_installed = {"c", "lua", "vim", "vimdoc", "query", "cpp", "css", "java", "javascript", "python", "html"},
+                ensure_installed = {"c", "lua", "vim", "vimdoc", "query", "cpp", "css", "java", "javascript", "python", "html", "robot"},
                 auto_install = true,
                 highlight = {
                     enable = true,
                 },
             })
-        end, 
+        end,
     },
     {
         "nvim-lualine/lualine.nvim",
@@ -111,21 +116,18 @@ require("lazy").setup({
         end,
     },
     {
-        "lukas-reineke/indent-blankline.nvim", 
+        "lukas-reineke/indent-blankline.nvim",
         config = function()
             require("indent_blankline").setup()
         end,
     },
     {
-        "numToString/Comment.nvim",
+        "numToStr/Comment.nvim",
         lazy = false,
         config = function()
             require("Comment").setup({
-                toggler = {
-                    line = "<leader>c",
-                },
-                opleader = {
-                    line = "<leader>c",
+                mappings = {
+                    basic = true,
                 },
             })
         end,
@@ -137,15 +139,15 @@ require("lazy").setup({
         config = function()
             require("telescope").setup()
             local builtin = require("telescope.builtin")
-            keymap("n", "<leader>ff", builtin.find_files, {}) -- lists files in the current working directory
-            keymap("n", "<leader>fg", builtin.live_grep, {}) -- search for a string in the current working dir
-            keymap("n", "<leader>fb", builtin.buffers, {})
-            keymap("n", "<leader>ft", builtin.colorscheme, {})
-            keymap("n", "<leader>fr", builtin.registers, {})
-            keymap("n", "<leader>fm", builtin.keymaps, {})
-            keymap("n", "<leader>fc", builtin.current_buffer_fuzzy_find, {})
+            keymap("n", "<leader>ff", builtin.find_files, {desc = "find files in the current work directory"}) -- lists files in the current working directory
+            keymap("n", "<leader>fg", builtin.live_grep, {desc = "grep the working directory"}) -- search for a string in the current working dir
+            keymap("n", "<leader>fb", builtin.buffers, {desc = "search for the current open buffers"})
+            keymap("n", "<leader>ft", builtin.colorscheme, {desc = "search for a theme" })
+            keymap("n", "<leader>fr", builtin.registers, {desc = "search the registers"})
+            keymap("n", "<leader>fm", builtin.keymaps, {desc = "show all keymaps"})
+            keymap("n", "<leader>fc", builtin.current_buffer_fuzzy_find, {desc = "grep current file"})
         end,
-    }, 
+    },
     {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v3.x",
@@ -161,7 +163,7 @@ require("lazy").setup({
     },
     {
         'akinsho/bufferline.nvim',
-        version = "*", 
+        version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
             local bufferline = require('bufferline')
@@ -177,7 +179,6 @@ require("lazy").setup({
                         }
                     }
                 },
-                
             })
         end,
     },
@@ -186,7 +187,6 @@ require("lazy").setup({
         config = function()
             require("transparent").setup({})
         end,
-            
     },
     {
         "williamboman/mason.nvim",
@@ -198,7 +198,7 @@ require("lazy").setup({
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = {"lua_ls", "pyright"}
+                ensure_installed = {"lua_ls", "pyright", "robotframework_ls"}
             })
         end,
     },
@@ -208,18 +208,28 @@ require("lazy").setup({
             local lspconfig = require("lspconfig")
             lspconfig.lua_ls.setup({})
             lspconfig.pyright.setup({})
+            lspconfig.robotframework_ls.setup({})
             keymap("n", "K", vim.lsp.buf.hover, {}) -- in vim, shift + k displays the man page of the word under curson
             keymap("n", "gd", vim.lsp.buf.definition, {})
+            keymap("n", "od", vim.diagnostic.open_float, {})
         end,
     },
+    { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...}
 })-- neovim will look for the init.lua file of lazy and run its setup func with specific plugins
 
+vim.api.nvim_create_user_command("Openhtml", function()
+    vim.fn.system("xdg-open" .. " " .. vim.fn.expand("<cfile>"))
+end, {})
 
-replace = function() 
-    vim.cmd(string.format("%%s/%s/%s/%s", 
-    vim.fn.input("Enter what you wanna replace: "), 
-    vim.fn.input("Enter what you want it replaced with: "), 
-    vim.fn.input("Press 'g' for global replace or 'gc' for selected replace: "))) end
+vim.api.nvim_create_user_command("Ud", function()
+--[[
+:w under the hood just writes the current contents of the buffer to the file. However if we put a shell command after it 
+then the contents of the file get written to stdin and therefore not actually saved.
+diff then also takes in as arg the current file path since % is the register that holds the current file path string
+- means that the diff command just reads the stdin as the second file
+--]]
+    vim.cmd(":w !diff % -")
+end, {})
 
 --custom commands
 vim.api.nvim_create_user_command("Openconfig", function()
@@ -237,12 +247,32 @@ keymap("n", "<leader>sh", ":split<CR>", opts)
 keymap("n", "<leader>tv", ":vsplit | terminal<CR>", opts)
 keymap("n", "<leader>th", ":split | terminal<CR>", opts)
 -- general mappings
-keymap("n", "<leader>r", replace, {desc = "Runs replace function"})
+keymap("n", "<leader>r", function()
+    vim.cmd(string.format("%%s/%s/%s/%s",
+    vim.fn.input("Enter what you wanna replace: "),
+    vim.fn.input("Enter what you want it replaced with: "),
+    vim.fn.input("Press 'g' for global replace or 'gc' for selected replace: "))) end, {desc = "Runs replace function"})
 keymap("n", "<C-s>", ":w<CR>", {})
 -- use :bd to close the current buffer
 -- buffers
 keymap('n', '<Tab>', ':bnext<CR>', opts)
 -- lsp mappings
+
+-- TODO
+-- autocompletion
+-- snippets
+-- trouble plugin
+-- debugging
+-- move line up or down
+-- vim surround
+-- undo tree
+-- git integration
+-- refactor config
+
+
+
+
+
 
 
 
