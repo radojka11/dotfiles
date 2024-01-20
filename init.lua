@@ -43,6 +43,7 @@ vim.opt.inccommand = "split"  -- show preview window
 vim.opt.ignorecase = true
 vim.opt.termguicolors = true
 vim.opt.showmode = false
+vim.opt.updatetime = 50
 -- the leader key allows for keymaps that dont conflict with vims default keybindings
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -221,6 +222,24 @@ vim.api.nvim_create_user_command("Openhtml", function()
     vim.fn.system("xdg-open" .. " " .. vim.fn.expand("<cfile>"))
 end, {})
 
+-- Enter insert mode when opening a terminal.
+vim.api.nvim_create_autocmd("TermOpen", {   -- on each event "termopen" we can specify what we want to do
+    -- we need to create a group for each autocmd make it idempotent
+    group = vim.api.nvim_create_augroup("MyGroup", {clear = true}),
+    pattern = "*",
+    command = "startinsert"
+})
+
+keymap("n", "<leader>e", function()  -- todo: make generic and easyly extensible
+    local filetype = vim.api.nvim_exec("echo &filetype", true)
+    if filetype == "python" then
+        vim.cmd("vsp | terminal python3 %")
+    elseif filetype == "java" then
+        vim.cmd("vsp | terminal java %")
+    end
+end, opts)
+
+
 vim.api.nvim_create_user_command("Ud", function()
 --[[
 :w under the hood just writes the current contents of the buffer to the file. However if we put a shell command after it 
@@ -235,6 +254,7 @@ end, {})
 vim.api.nvim_create_user_command("Openconfig", function()
     vim.cmd([[:edit ~/.config/nvim/init.lua]])
 end, {})
+
 -- splits
 keymap("n", "<leader>l", "<C-w>l", opts)
 keymap("n", "<leader>h", "<C-w>h", opts)
