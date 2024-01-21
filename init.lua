@@ -44,6 +44,7 @@ vim.opt.ignorecase = true
 vim.opt.termguicolors = true
 vim.opt.showmode = false
 vim.opt.updatetime = 50
+vim.opt.colorcolumn = "90"
 -- the leader key allows for keymaps that dont conflict with vims default keybindings
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -118,8 +119,9 @@ require("lazy").setup({
     },
     {
         "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
         config = function()
-            require("indent_blankline").setup()
+            require("ibl").setup()
         end,
     },
     {
@@ -203,20 +205,97 @@ require("lazy").setup({
             })
         end,
     },
+
+    { 
+        "ellisonleao/gruvbox.nvim", 
+        priority = 1000, 
+        config = true, 
+    },
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            require("trouble").setup()
+        end,
+        opts = {
+
+        },
+    },
+    {
+        'goolord/alpha-nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        config = function ()
+            require'alpha'.setup(require'alpha.themes.startify'.config)
+        end
+    },
+    {
+        'L3MON4D3/LuaSnip',
+        dependencies = {
+        'saadparwaiz1/cmp_luasnip',
+        'rafamadriz/friendly-snippets',
+        },
+    },
+    {
+        "hrsh7th/nvim-cmp",
+        config = function()
+            local cmp = require'cmp'
+            require('luasnip.loaders.from_vscode').lazy_load()
+
+            cmp.setup({
+            snippet = {
+                -- REQUIRED - you must specify a snippet engine
+                expand = function(args)
+                  vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+                  require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                  -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+                  -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+                end,
+            },
+            window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            },
+            mapping = cmp.mapping.preset.insert({
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-e>'] = cmp.mapping.abort(),
+                ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+            }),
+            sources = cmp.config.sources({
+              -- { name = 'nvim_lsp' },
+                { name = 'luasnip' }, -- For luasnip users.
+            }, {
+                { name = 'buffer' },
+            })
+        })
+    end,
+    },
     {
         "neovim/nvim-lspconfig",
         config = function()
             local lspconfig = require("lspconfig")
-            lspconfig.lua_ls.setup({})
-            lspconfig.pyright.setup({})
-            lspconfig.robotframework_ls.setup({})
+            lspconfig.lua_ls.setup({
+            })
+            lspconfig.pyright.setup({
+            })
+            lspconfig.robotframework_ls.setup({
+            })
             keymap("n", "K", vim.lsp.buf.hover, {}) -- in vim, shift + k displays the man page of the word under curson
             keymap("n", "gd", vim.lsp.buf.definition, {})
             keymap("n", "od", vim.diagnostic.open_float, {})
         end,
     },
-    { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...}
-})-- neovim will look for the init.lua file of lazy and run its setup func with specific plugins
+    -- {
+    --     "kylechui/nvim-surround",
+    --     version = "*",
+    --     event = "VeryLazy",
+    --     config = function()
+    --         require("nvim-surround").setup({
+    --         })
+    --     end
+    -- }
+})
 
 vim.api.nvim_create_user_command("Openhtml", function()
     vim.fn.system("xdg-open" .. " " .. vim.fn.expand("<cfile>"))
@@ -281,10 +360,7 @@ keymap('n', '<Tab>', ':bnext<CR>', opts)
 -- TODO
 -- autocompletion
 -- snippets
--- trouble plugin
 -- debugging
--- move line up or down
--- vim surround
 -- undo tree
 -- git integration
 -- refactor config
