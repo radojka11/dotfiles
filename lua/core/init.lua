@@ -1,0 +1,5 @@
+require("core.options")
+require("core.commands")
+require("core.lazy")
+require("core.remaps")
+require("core.autocmd")
