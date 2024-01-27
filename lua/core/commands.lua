@@ -10,7 +10,7 @@ end, {})
 
 --custom commands
 vim.api.nvim_create_user_command("Openconfig", function()
-    vim.cmd([[:edit ~/.config/nvim/init.lua]])
+    vim.cmd([[:Neotree dir=~/.config/nvim]])
 end, {})
 
 vim.api.nvim_create_user_command("Openhtml", function()
@@ -25,9 +25,8 @@ local run_commands = {
 }
 
 vim.api.nvim_create_user_command("Run", function()
-    local filetype = vim.api.nvim_exec("echo &filetype", true)
     for file, command in pairs(run_commands) do
-        if filetype == file then
+        if vim.bo.filetype == file then
             vim.cmd("vsp | terminal " .. command)
             break
         end

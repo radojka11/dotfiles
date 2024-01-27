@@ -1,5 +1,5 @@
 local keymap = vim.keymap.set
-local opts = { noremap = true, silent = true } -- no recursive mappings and dont produce an output
+opts = { noremap = true, silent = true } -- no recursive mappings and dont produce an output
 
 -- splits
 keymap("n", "<leader>l", "<C-w>l", opts)
@@ -21,3 +21,4 @@ keymap("n", "<leader>r", function()
 end, { desc = "Runs replace function" })
 keymap("n", "<C-s>", ":w<CR>", {})
 keymap('n', '<Tab>', ':bnext<CR>', opts)
+

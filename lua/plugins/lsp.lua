@@ -7,6 +7,8 @@ return {
         { "williamboman/mason.nvim" },
         { "williamboman/mason-lspconfig.nvim" },
         { "jay-babu/mason-nvim-dap.nvim" },
+        { "folke/neodev.nvim",                opts = {} },
+        { "onsails/lspkind.nvim" },
 
         -- null-ls
         { "nvimtools/none-ls.nvim" },
@@ -28,6 +30,8 @@ return {
         },
     },
     config = function()
+        -- IMPORTANT: make sure to setup neodev BEFORE lspconfig
+        require("neodev").setup({})
         local lsp_zero = require('lsp-zero')
         require("luasnip.loaders.from_vscode").lazy_load()
         lsp_zero.on_attach(function(client, bufnr)
@@ -36,13 +40,29 @@ return {
             lsp_zero.default_keymaps({ buffer = bufnr })
         end)
 
-        -- to learn how to use mason.nvim with lsp-zero
-        -- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
-        require('mason').setup({})
+        require('mason').setup({
+            opts = {
+                ensure_installed = {
+                    "pyright",
+                    "debugpy",
+                    "lua_ls",
+                    "shfmt",
+                }
+            }
+        })
         require('mason-lspconfig').setup({
             handlers = {
                 lsp_zero.default_setup,
             }
         })
+        local lspkind = require('lspkind')
+        local cmp = require("cmp")
+        cmp.setup {
+            formatting = {
+                format = lspkind.cmp_format({
+                    mode = 'symbol_text', -- show only symbol annotations
+                })
+            }
+        }
     end,
 }

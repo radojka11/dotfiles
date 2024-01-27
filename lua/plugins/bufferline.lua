@@ -9,7 +9,7 @@ return {
                 style_preset = bufferline.style_preset.minimal,
                 offsets = {
                     {
-                        filetype = "NvimTree",
+                        filetype = "neo-tree",
                         text = "File Explorer",
                         highlight = "Directory",
                         separator = true     -- use a "true" to enable the default, or set your own character

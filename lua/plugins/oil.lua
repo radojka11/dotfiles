@@ -4,7 +4,8 @@ return {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-        require("oil").setup({
+        local oil = require("oil")
+        oil.setup({
             delete_to_trash = false,
             view_options = {
                 -- Show files and directories that start with "."
