@@ -9,6 +9,7 @@ return {
         { "jay-babu/mason-nvim-dap.nvim" },
         { "folke/neodev.nvim",                opts = {} },
         { "onsails/lspkind.nvim" },
+        { "RRethy/vim-illuminate" },
 
         -- null-ls
         { "nvimtools/none-ls.nvim" },
