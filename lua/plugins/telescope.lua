@@ -15,5 +15,6 @@ return {
         keymap("n", "<leader>fr", builtin.registers, { desc = "search the registers" })
         keymap("n", "<leader>fm", builtin.keymaps, { desc = "show all keymaps" })
         keymap("n", "<leader>fc", builtin.current_buffer_fuzzy_find, { desc = "grep current file" })
+        keymap("n", "<leader>fo", builtin.oldfiles, { desc = "search old files" })
     end,
 }
