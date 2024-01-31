@@ -1,4 +1,4 @@
-local keymap = vim.keymap.set
+keymap = vim.keymap.set
 opts = { noremap = true, silent = true } -- no recursive mappings and dont produce an output
 
 -- splits

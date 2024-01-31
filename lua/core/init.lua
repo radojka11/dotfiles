@@ -19,6 +19,11 @@ if vim.fn.has("wsl") == 1 then
     }
 end
 
+vim.opt.fillchars = { eob = " " } -- hide the tildes from vanilla vim
+vim.api.nvim_set_hl(0, "Normal", {bg = "none"}) -- this stuff is probably not needed
+vim.api.nvim_set_hl(0, "NormalFloat", {bg = "none"})
+vim.cmd("set foldcolumn=0") -- disable the column that shows folds, looks fugly
+
 if vim.fn.execute("!dpkg -l | grep ripgrep") == "nil" then
     print("ripgrep is not installed on the system, installing...")
     vim.fn.execute("sudo apt-get install ripgrep")

@@ -24,7 +24,7 @@ return {
                 else
                     dap.toggle_breakpoint(condition)
                 end
-            end, {})
+            end, {silent = true})
         end
     },
     {

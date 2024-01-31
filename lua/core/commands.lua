@@ -10,7 +10,7 @@ end, {})
 
 --custom commands
 vim.api.nvim_create_user_command("Openconfig", function()
-    vim.cmd([[:Neotree dir=~/.config/nvim]])
+    vim.cmd([[:Neotree dir=~/.config/nvim position=float]])
 end, {})
 
 vim.api.nvim_create_user_command("Openhtml", function()

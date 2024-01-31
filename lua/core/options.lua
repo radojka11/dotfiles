@@ -17,7 +17,7 @@ local options = {
     termguicolors = true,
     showmode = false,
     updatetime = 50,
-    colorcolumn = "90",
+    -- colorcolumn = "90",
 }
 
 
