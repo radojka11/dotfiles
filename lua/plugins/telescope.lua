@@ -13,5 +13,7 @@ return {
         keymap("n", "<leader>fm", builtin.keymaps, { desc = "show all keymaps" })
         keymap("n", "<leader>fc", builtin.current_buffer_fuzzy_find, { desc = "grep current file" })
         keymap("n", "<leader>fo", builtin.oldfiles, { desc = "search old files" })
+        vim.cmd("highlight TelescopeBorder guibg=NONE")
+        vim.cmd("highlight TelescopeNormal guibg=NONE")
     end,
 }

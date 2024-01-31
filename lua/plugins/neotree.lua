@@ -1,5 +1,4 @@
 local keymap = vim.keymap.set
-local opts = { noremap = true, silent = true } -- no recursive mappings and dont produce an output
 
 return {
     "nvim-neo-tree/neo-tree.nvim",
@@ -15,7 +14,6 @@ return {
                 filtered_items = {
                     hide_dotfiles = false,
                 }
-
             },
             popup_border_style = "rounded"
         })
@@ -27,7 +25,7 @@ return {
             { text = " ", texthl = "DiagnosticSignInfo" })
         vim.fn.sign_define("DiagnosticSignHint",
             { text = "󰌵", texthl = "DiagnosticSignHint" })
-
         keymap("n", "<leader>n", ":Neotree position=float toggle<CR>", opts)
+        vim.cmd("highlight NeoTreeNormal guibg=NONE")
     end,
 }
