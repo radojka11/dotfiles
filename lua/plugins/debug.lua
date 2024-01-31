@@ -15,16 +15,16 @@ return {
             dap.listeners.before.event_exited["dapui_config"] = function()
                 dapui.close()
             end
-            vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, {})
-            vim.keymap.set("n", "<leader>dc", dap.continue, {})
-            vim.keymap.set("n", "<leader>db", function()
+            keymap("n", "<leader>db", dap.toggle_breakpoint, {})
+            keymap("n", "<leader>dc", dap.continue, {})
+            keymap("n", "<leader>db", function()
                 local condition = vim.fn.input("Optional condition: ")
                 if condition == nil then
                     dap.toggle_breakpoint()
                 else
                     dap.toggle_breakpoint(condition)
                 end
-            end, {silent = true})
+            end, { silent = true })
         end
     },
     {

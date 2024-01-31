@@ -1,5 +1,3 @@
-local keymap = vim.keymap.set
-
 return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -27,5 +25,6 @@ return {
             { text = "󰌵", texthl = "DiagnosticSignHint" })
         keymap("n", "<leader>n", ":Neotree position=float toggle<CR>", opts)
         vim.cmd("highlight NeoTreeNormal guibg=NONE")
+        vim.cmd("highlight NeoTreeFloatBorder guibg=NONE")
     end,
 }
