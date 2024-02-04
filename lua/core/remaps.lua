@@ -21,4 +21,4 @@ keymap("n", "<leader>r", function()
 end, { desc = "Runs replace function" })
 keymap("n", "<C-s>", ":w<CR>", {})
 keymap('n', '<Tab>', ':bnext<CR>', opts)
-
+keymap("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>", opts)

@@ -40,5 +40,12 @@ return {
                 end
             })
         end,
+    },
+    {
+        "ggandor/leap.nvim",
+        config = function()
+            vim.keymap.set('n', '<leader>g', '<Plug>(leap-forward)')
+            vim.keymap.set('n', '<leader>G', '<Plug>(leap-backward)')
+        end,
     }
 }
