@@ -5,19 +5,20 @@ return {
         local alpha = require("alpha")
         local dashboard = require("alpha.themes.dashboard")
         dashboard.section.header.val = {
-        "                                                     ",
-        "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-        "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-        "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-        "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-        "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-        "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
-        "                                                     ",
+            "                                                     ",
+            "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
+            "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
+            "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
+            "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
+            "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
+            "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
+            "                                                     ",
         }
         -- Set menu
         dashboard.section.buttons.val = {
             dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
             dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
+            -- dashboard.button("t", "Restore Session", ":RestoreSession<CR>"),
             dashboard.button("s", "  > Settings", ":Openconfig<CR>"),
             dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
         }
