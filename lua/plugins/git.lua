@@ -18,7 +18,7 @@ return {
                         --if we are in vimdiffview then keep the default mapping
                         if vim.wo.diff then return ']c' end
                         --defer execution until the function returned because this
-                        --is an expression mapping. Expression mapping means that the 
+                        --is an expression mapping. Expression mapping means that the
                         --right mapping is a callback function but the actual return value
                         --of the callback an not the function itself.
                         --So for it to be copatible with the if above we need this.
@@ -34,5 +34,10 @@ return {
                 end,
             })
         end,
-    }
+    },
+    {
+        "sindrets/diffview.nvim",
+        -- DiffviewOpen
+        -- check out h diff-mode for other features
+    },
 }
