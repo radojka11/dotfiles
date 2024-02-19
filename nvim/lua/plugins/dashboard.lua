@@ -20,7 +20,7 @@ return {
             dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
             dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
             dashboard.button("t", "  > Restore Session", ":lua require('persistence').load()<cr>"),
-            dashboard.button("g", "󰊢  > Git Status", ":Git status<CR>"),
+            dashboard.button("g", "󰊢  > Git Status", ":Git<CR>"),
             dashboard.button("s", "  > Settings", ":Openconfig<CR>"),
             dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
         }
