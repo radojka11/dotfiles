@@ -22,7 +22,7 @@ return {
             dashboard.button("t", "  > Restore Session", ":lua require('persistence').load()<cr>"),
             dashboard.button("g", "󰊢  > Git Status", ":Git status<CR>"),
             dashboard.button("s", "  > Settings", ":Openconfig<CR>"),
-            dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
+            dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
         }
         -- Send config to alpha
         alpha.setup(dashboard.opts)

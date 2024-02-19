@@ -20,7 +20,6 @@ local options = {
     -- colorcolumn = "90",
 }
 
-
 for option, value in pairs(options) do
     vim.opt[option] = value
 end

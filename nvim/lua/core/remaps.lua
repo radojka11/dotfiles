@@ -12,7 +12,7 @@ keymap("n", "<leader>sh", ":split<CR>", opts)
 keymap("n", "<leader>tv", ":vsplit | terminal<CR>", opts)
 keymap("n", "<leader>th", ":split | terminal<CR>", opts)
 -- general mappings
-keymap("n", "<leader>e", ":Run<CR>", opts)
+keymap("n", "<leader>e", ":w | Run<CR>", opts)
 keymap("n", "<leader>r", function()
     vim.cmd(string.format("%%s/%s/%s/%s",
         vim.fn.input("Enter what you wanna replace: "),
@@ -20,5 +20,6 @@ keymap("n", "<leader>r", function()
         vim.fn.input("Press 'g' for global replace or 'gc' for selected replace: ")))
 end, { desc = "Runs replace function" })
 keymap("n", "<C-s>", ":w<CR>", {})
-keymap('n', '<Tab>', ':bnext<CR>', opts)
+keymap('n', '<tab>', ':bnext<cr>', opts)
+keymap('n', '<S-tab>', ':bprevious<cr>', opts)
 keymap("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>", opts)
