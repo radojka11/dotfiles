@@ -190,5 +190,11 @@ return {
                 end, opts)
             })
         end,
+    },
+    {
+        "uga-rosa/ccc.nvim",
+        config = function()
+            require("ccc").setup({})
+        end,
     }
 }
