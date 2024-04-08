@@ -116,6 +116,8 @@ return {
             bufferline.setup({
                 options = {
                     style_preset = bufferline.style_preset.minimal,
+                    diagnostics = 'nvim_lsp',
+                    -- separator_style = 'slant',
                     offsets = {
                         {
                             -- filetype = "neo-tree",
