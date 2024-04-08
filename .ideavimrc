@@ -18,8 +18,8 @@ nnoremap <leader>sh :split<CR>
 nnoremap <leader>l <C-w>l 
 nnoremap <leader>h <C-w>h 
 nnoremap <leader>k <C-w>k 
-nnoremap <TAB> :action PreviousTab<CR>
-nnoremap <s-TAB> :action NextTab<CR>
+nnoremap <s-TAB> :action PreviousTab<CR>
+nnoremap <TAB> :action NextTab<CR>
 
 vnoremap <leader>y "*y
 " vnoremap <leader>d "*d
